@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
 <body>
@@ -12,8 +13,8 @@
         <h1 class="font-weight-bold text-center">Weather Dashboard</h1>
     </header>
     <main class="container-fluid">
-        <div class="row">
-            <section class="col-3">
+        <div class="row dashboard">
+            <section class="col-3 ml-2" id="left-side">
                 <form id="searchForm" class="form-group">
                     <label for="city-search" class="form-label">Search for a city:</label>
                     <input id="city-search" for="city-search" class="form-control" type="text" placeholder="Enter city name here"/>
@@ -21,15 +22,17 @@
                 </form>
                 <div></div>
             </section>
-            <section class="col">
-                <div id="city-weather"></div>
-                <div id="forecast">
+            <section class="col" id="right-side">
+                <div id="city-weather" class="pt-2 mt-2 mb-3"></div>
+                <div id="forecast" class="pt-2 mt-2 mb-3">
                     <h3 id="forecast-header"></h3>
-                    <div id="daily-weather" class="row"></div>
+                    <div id="daily-weather" class="row">
+                        <h4>5-day forecast:</h4>
+                    </div>
                 </div>
             </section>
         </div>
     </main>
-    
+    <script src="./assets/scripts/script.js"></script>
 </body>
 </html>
