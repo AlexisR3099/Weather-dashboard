@@ -6,6 +6,7 @@ var formSubmit = function(event) {
     let city = document.getElementById('citySearch').value.trim();
     if(city) {
         cityData(city);
+        futureWeather(city);
         city.value = '';
     } else {
         alert('Enter a city');
@@ -23,8 +24,7 @@ var cityData = function(city) {
                 fetch(callAPI).then((response) => {
                     response.json().then((data) => {
                         currentWeather(city, data);
-                        //futureWeather(data);
-                        console.log(data);
+                        futureWeather(data);
                     })
                 })
             })
@@ -47,7 +47,34 @@ function currentWeather(city, data) {
     `<h5>${newCity} (${currentTime})<h4>
     <p>Temperature: ${currentTemperature.toFixed(2)}&deg;F</p>
     <p>Humidity: ${currentHumidity}%<p>
+    <p>Wind: ${currentWind}mph<p>
     <p>UV Index: <span id='currentUvi'>${currentUvi}</span></p>`
+};
+
+var futureWeather = function(data) {
+    var dailyWeather = document.querySelector('#daily-weather');
+    dailyWeather.textContent = '';
+
+    for (let i=1; i < 6; i++) {
+        var dailyCityWeather = {
+            date: data.daily[i].dt,
+            temp: data.daily[i].temp.day,
+            wind: data.daily[i].wind_speed,
+            humidity: data.daily[1].humidity
+        };
+
+        var currentTemperature = ((data.current.temp - 273.15) * 1.8) + 32;
+        var currentTime = moment.unix(dailyCityWeather.date).format('MM/DD/YYYY');
+        var foreCast = document.createElement('div');
+
+        foreCast.innerHTML = 
+        `<div>
+        <p>${currentTime}</p>
+        <p>Temp: ${currentTemperature.toFixed(2)}&deg;F</p>
+        <p>Wind: ${dailyCityWeather.wind} MPH</p>
+        <p>Humidity: ${dailyCityWeather.humidity} %
+        </div>`; dailyWeather.append(foreCast);
+    };
 }
 
 document.querySelector("#search-btn").addEventListener('click', formSubmit);
